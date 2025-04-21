@@ -1,0 +1,63 @@
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
+return require('packer').startup(function(use)
+
+  use 'wbthomason/packer.nvim'
+
+  -- gruvbox color scheme
+  use 'ellisonleao/gruvbox.nvim'
+  -- kanagawa color scheme
+  use 'rebelot/kanagawa.nvim'
+
+  -- nvim-tree
+  use 'nvim-tree/nvim-tree.lua'
+  use 'nvim-tree/nvim-web-devicons'
+
+  -- lualine
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = {
+      'nvim-tree/nvim-web-devicons'
+    },
+  }
+
+  -- plenary for luahelper functions
+  use 'nvim-lua/plenary.nvim'
+
+  -- telescope for finding files
+  use {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.8",
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+  }
+
+  -- Treesitter for laguage highlighting
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+  }
+
+
+
+
+
+
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+end)
+
