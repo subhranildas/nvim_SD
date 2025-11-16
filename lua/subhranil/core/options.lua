@@ -1,23 +1,3 @@
-vim.cmd("let g:netrw_liststyle = 3")
-
--- Add autocommand to keep background of nvim transparent for NvimTree
-vim.cmd("autocmd VimEnter * hi NvimTreeNormal guibg=NONE" )
-vim.cmd("autocmd VimEnter * hi NvimTreeNormalNC guibg=NONE" )
-
--- Remove Trailing Whitespaces from following files
-vim.cmd("autocmd BufWritePre *.c :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.h :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.sh :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.md :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.txt :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.lua :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.js :%s/\\s\\+$//e" )
-vim.cmd("autocmd BufWritePre *.py :%s/\\s\\+$//e" )
-
--- Move highlighted Lines
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv" )
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv" )
-
 local opt = vim.opt
 
 -- Setup Line number and relative line number

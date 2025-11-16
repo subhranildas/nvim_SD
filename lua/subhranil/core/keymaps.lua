@@ -4,6 +4,10 @@ local keymap = vim.keymap
 
 -- keymap.set("i", "jk", "<ESC>", {desc = "Exit insert mode with jk"})
 
+-- Move highlighted Lines
+keymap.set("v", "J", ":m '>+1<CR>gv=gv" )
+keymap.set("v", "K", ":m '<-2<CR>gv=gv" )
+
 keymap.set("n", "<leader>nh", ":nohl<CR>", {desc = "Clear Search Highlights"})
 
 -- Window management
