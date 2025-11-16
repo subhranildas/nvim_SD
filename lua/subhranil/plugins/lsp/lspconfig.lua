@@ -18,71 +18,66 @@ return {
 
         local keymap = vim.keymap
 
-        vim.api.nvim_create_autocmd("LspAttach", {
+        -- Shared on_attach for all LSP servers
+        local on_attach = function(_, bufnr)
+            -- Buffer local mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local opts = { buffer = bufnr, silent = true }
 
-            group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+            -- Set keybinds
 
-            callback = function(ev)
+            opts.desc = "Show LSP references"
+            -- Show definition, references
+            keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
 
-                -- Buffer local mappings.
-                -- See `:help vim.lsp.*` for documentation on any of the below functions
-                local opts = { buffer = ev.buf, silent = true }
+            opts.desc = "Go to declaration"
+            -- Go to declaration
+            keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 
-                -- Set keybinds
+            opts.desc = "Show LSP definitions"
+            -- Show lsp definitions
+            keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
 
-                opts.desc = "Show LSP references"
-                -- Show definition, references
-                keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
+            opts.desc = "Show LSP implementations"
+            -- Show lsp implementations
+            keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
 
-                opts.desc = "Go to declaration"
-                -- Go to declaration
-                keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+            opts.desc = "Show LSP type definitions"
+            -- Show lsp type definitions
+            keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
 
-                opts.desc = "Show LSP definitions"
-                -- Show lsp definitions
-                keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+            opts.desc = "See available code actions"
+            -- See available code actions, in visual mode will apply to selection
+            keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 
-                opts.desc = "Show LSP implementations"
-                -- Show lsp implementations
-                keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+            opts.desc = "Smart rename"
+            -- Smart rename
+            keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
-                opts.desc = "Show LSP type definitions"
-                -- Show lsp type definitions
-                keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+            opts.desc = "Show buffer diagnostics"
+            -- Show  diagnostics for file
+            keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
 
-                opts.desc = "See available code actions"
-                -- See available code actions, in visual mode will apply to selection
-                keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+            opts.desc = "Show line diagnostics"
+            -- Show diagnostics for line
+            keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
-                opts.desc = "Smart rename"
-                -- Smart rename
-                keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+            opts.desc = "Go to previous diagnostic"
+            -- Jump to previous diagnostic in buffer
+            keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 
-                opts.desc = "Show buffer diagnostics"
-                -- Show  diagnostics for file
-                keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+            opts.desc = "Go to next diagnostic"
+            -- Jump to next diagnostic in buffer
+            keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-                opts.desc = "Show line diagnostics"
-                -- Show diagnostics for line
-                keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+            opts.desc = "Show documentation for what is under cursor"
+            -- Show documentation for what is under cursor
+            keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
-                opts.desc = "Go to previous diagnostic"
-                -- Jump to previous diagnostic in buffer
-                keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-
-                opts.desc = "Go to next diagnostic"
-                -- Jump to next diagnostic in buffer
-                keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-
-                opts.desc = "Show documentation for what is under cursor"
-                -- Show documentation for what is under cursor
-                keymap.set("n", "K", vim.lsp.buf.hover, opts)
-
-                opts.desc = "Restart LSP"
-                -- Mapping to restart lsp if necessary
-                keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
-            end,
-        })
+            opts.desc = "Restart LSP"
+            -- Mapping to restart lsp if necessary
+            keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+        end
 
         -- Used to enable autocompletion (assign to every lsp server config)
         local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -100,6 +95,7 @@ return {
             function(server_name)
                 lspconfig[server_name].setup({
                     capabilities = capabilities,
+                    on_attach = on_attach,
                 })
             end,
 
@@ -109,6 +105,8 @@ return {
 
                     capabilities = capabilities,
                     on_attach = function(client, bufnr)
+                        on_attach(client, bufnr)
+
                         vim.api.nvim_create_autocmd("BufWritePost", {
                             pattern = { "*.js", "*.ts" },
                             callback = function(ctx)
@@ -124,6 +122,7 @@ return {
                 -- Configure graphql language server
                 lspconfig["graphql"].setup({
                     capabilities = capabilities,
+                    on_attach = on_attach,
                     filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
                 })
             end,
@@ -132,6 +131,7 @@ return {
                 -- Configure emmet language server
                 lspconfig["emmet_ls"].setup({
                     capabilities = capabilities,
+                    on_attach = on_attach,
                     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
                 })
             end,
@@ -140,6 +140,7 @@ return {
                 -- Configure lua server (with special settings)
                 lspconfig["lua_ls"].setup({
                     capabilities = capabilities,
+                    on_attach = on_attach,
                     settings = {
                         Lua = {
                             -- Make the language server recognize "vim" global
