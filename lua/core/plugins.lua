@@ -57,6 +57,10 @@ return require('packer').startup(function(use)
       require("mason").setup()
     end
   }
+
+  -- install required lsps
+  use "WhoIsSethDaniel/mason-tool-installer.nvim"
+
   -- lspconfig
   use "neovim/nvim-lspconfig"
 
