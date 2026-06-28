@@ -21,6 +21,7 @@ local function load_gruvbox()
 end
 
 local function load_kanagawa()
+  vim.o.termguicolors = true
   require("kanagawa").setup({
     compile = false,
     transparent = true,

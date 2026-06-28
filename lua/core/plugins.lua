@@ -50,6 +50,31 @@ return require('packer').startup(function(use)
     run = ":TSUpdate",
   }
 
+  -- Mason for LSPs
+  use {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  }
+  -- lspconfig
+  use "neovim/nvim-lspconfig"
+
+  -- For nvim to use rust-analyzer
+  use "mrcjkb/rustaceanvim"
+
+  -- The completion engine that displays the autocomplete popups
+  use "hrsh7th/nvim-cmp"
+
+  -- Connects nvim-cmp to the Neovim LSP,
+  -- so suggestions come from language servers like rust-analyzer and clangd
+  use "hrsh7th/cmp-nvim-lsp"
+
+  -- A snippet engine that expands templates
+  use "L3MON4D3/LuaSnip"
+
+  -- Helps nvim-cmp extend snippets
+  use "saadparwaiz1/cmp_luasnip"
 
 
 
