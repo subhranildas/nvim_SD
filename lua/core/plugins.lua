@@ -20,10 +20,15 @@ return require('packer').startup(function(use)
   -- kanagawa color scheme
   use 'rebelot/kanagawa.nvim'
 
-  -- nvim-tree
-  use 'nvim-tree/nvim-tree.lua'
   use 'nvim-tree/nvim-web-devicons'
 
+  -- nvim-tree
+  use {
+      "nvim-tree/nvim-tree.lua",
+      requires = {
+          "nvim-tree/nvim-web-devicons",
+      },
+  }
   -- lualine
   use {
     'nvim-lualine/lualine.nvim',
@@ -79,6 +84,9 @@ return require('packer').startup(function(use)
 
   -- Helps nvim-cmp extend snippets
   use "saadparwaiz1/cmp_luasnip"
+
+  -- Helps with which key bindings available
+  use "folke/which-key.nvim"
 
 
 

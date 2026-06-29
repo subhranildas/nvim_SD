@@ -30,13 +30,18 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Remove Highlighting
-vim.keymap.set('n', '<leader>nh', ':nohlsearch<CR>')
+vim.keymap.set('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true, desc = "No Highlight" })
 
 -- Window navigation
-vim.keymap.set('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
-vim.keymap.set('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>wh', '<C-w>h', { noremap = true, silent = true, desc = "Window Left" })
+vim.keymap.set('n', '<leader>wj', '<C-w>j', { noremap = true, silent = true, desc = "Window Down" })
+vim.keymap.set('n', '<leader>wk', '<C-w>k', { noremap = true, silent = true, desc = "Window Up" })
+vim.keymap.set('n', '<leader>wl', '<C-w>l', { noremap = true, silent = true, desc = "Window Right" })
 
 -- Smoother Half-page style scrolling
 vim.keymap.set("n", "<C-d>", "10j", { silent = true })
@@ -46,8 +51,8 @@ vim.keymap.set("n", "<C-u>", "10k", { silent = true })
 -- vim.keymap.set("n", "<leader>bl", ":ls<CR>", { noremap = true, silent = true })
 
 -- Previous / next buffer
-vim.keymap.set("n", "<leader>bp", ":ls<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>bn", ":ls<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bp", ":ls<CR>", { noremap = true, silent = true, desc = "Buffer Previous" })
+vim.keymap.set("n", "<leader>bn", ":ls<CR>", { noremap = true, silent = true, desc = "Buffer Next" })
 
 -- Open Specific buffer
 vim.keymap.set("n", "<leader>bb", function()
@@ -55,14 +60,14 @@ vim.keymap.set("n", "<leader>bb", function()
   if num ~= "" then
     vim.cmd("buffer " .. num)
   end
-end, { noremap = true, silent = true })
+end, { noremap = true, silent = true, desc = "Open Specific Buffer" })
 
 -- Previous buffer in horizontal split
-vim.keymap.set("n", "<leader>bsh", ":split | bp<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bsh", ":split | bp<CR>", { noremap = true, silent = true, desc = "Buffer Split Horizontal" })
 
 -- Previous buffer in vertical split
-vim.keymap.set("n", "<leader>bsv", ":vsplit | bp<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bsv", ":vsplit | bp<CR>", { noremap = true, silent = true, desc = "Buffer Split Vertical" })
 
 -- Close current split
-vim.keymap.set("n", "<leader>wc", ":close<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>wc", ":close<CR>", { noremap = true, silent = true, desc = "Window Close" })
 

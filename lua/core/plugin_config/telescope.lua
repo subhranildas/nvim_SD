@@ -82,8 +82,8 @@ vim.keymap.set("n", "<leader>fg", function()
   builtin.live_grep({
     previewer = true,
   })
-end, { desc = "Live grep from current Directory" })
+end, { desc = "Find String From Current Directory" })
 
 -- To open files in buffer
-vim.keymap.set("n", "<leader>bl", "<cmd>Telescope buffers<CR>")
+vim.keymap.set("n", "<leader>bl", "<cmd>Telescope buffers<CR>", { desc = "Open Buffer Select" })
 

@@ -17,7 +17,7 @@ require("nvim-tree").setup({
     preserve_window_proportions = true,
   },
   filters = {
-    dotfiles = true,
+    dotfiles = false,
   },
   git = {
     ignore = false,
@@ -30,10 +30,14 @@ local tree_api = require("nvim-tree.api")
 vim.keymap.set("n", "<CR>", tree_api.node.open.edit, { desc = "Open file" })
 
 -- Open in vertical split
-vim.keymap.set("n", "<leader>v", tree_api.node.open.vertical, { desc = "Vertical Split" })
+vim.keymap.set("n", "<leader>v", tree_api.node.open.vertical, { desc = "Open in Vertical Split (From Tree)" })
 
 -- Open in horizontal split
-vim.keymap.set("n", "<leader>s", tree_api.node.open.horizontal, { desc = "Horizontal Split" })
+vim.keymap.set("n", "<leader>s", tree_api.node.open.horizontal, { desc = "Open in Horizontal Split (From Tree)" })
 
 -- Open in new tab
-vim.keymap.set("n", "<leader>t", tree_api.node.open.tab, { desc = "Open in Tab" })
+vim.keymap.set("n", "<leader>t", tree_api.node.open.tab, { desc = "Open in Tab (From Tree)" })
+
+-- Toggle Tree on/off
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Toggle NvimTree" })
+
