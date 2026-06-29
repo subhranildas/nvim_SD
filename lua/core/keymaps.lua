@@ -29,6 +29,13 @@ vim.opt.relativenumber = false
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Vertical guide lines
+vim.opt.colorcolumn = "80,100"
+
+-- Enable Spell checker
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
+
 -- Remove Highlighting
 vim.keymap.set('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true, desc = "No Highlight" })
 

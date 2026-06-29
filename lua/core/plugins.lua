@@ -88,9 +88,11 @@ return require('packer').startup(function(use)
   -- Helps with which key bindings available
   use "folke/which-key.nvim"
 
+  -- Helps understanding indents and also scope
+  use "lukas-reineke/indent-blankline.nvim"
 
-
-
+  -- Helps keep current scope visible at the top
+  use "nvim-treesitter/nvim-treesitter-context"
 
 
   if packer_bootstrap then

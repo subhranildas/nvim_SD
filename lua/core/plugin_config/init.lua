@@ -12,4 +12,4 @@ require("core.plugin_config.theme").load("kanagawa")
 require("core.plugin_config.rustaceanvim")
 require("core.plugin_config.cmp")
 require("core.plugin_config.which-key")
-
+require("core.plugin_config.indent-blankline")
