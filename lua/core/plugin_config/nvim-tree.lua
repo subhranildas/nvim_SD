@@ -41,3 +41,8 @@ vim.keymap.set("n", "<leader>t", tree_api.node.open.tab, { desc = "Open in Tab (
 -- Toggle Tree on/off
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true, desc = "Toggle NvimTree" })
 
+-- Jump to NvimTree
+vim.keymap.set("n", "<leader>nf", function()
+  local api = require("nvim-tree.api")
+  api.tree.focus()
+end, { desc = "Focus NvimTree" })

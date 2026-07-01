@@ -29,6 +29,7 @@ require("telescope").setup({
       i = {
         ["<C-j>"] = "move_selection_next",
         ["<C-k>"] = "move_selection_previous",
+        ["<C-d>"] = require("telescope.actions").delete_buffer,
       },
     },
   },
@@ -54,6 +55,18 @@ local function get_workspace_root()
   end
 
   return vim.fn.getcwd()
+end
+
+local function get_visual_selection()
+  local _, ls, cs = unpack(vim.fn.getpos("'<"), 2, 3)
+  local _, le, ce = unpack(vim.fn.getpos("'>"), 2, 3)
+
+  if ls ~= le then
+    return nil
+  end
+
+  local line = vim.fn.getline(ls)
+  return line:sub(cs, ce)
 end
 
 -- Keymaps
@@ -83,6 +96,64 @@ vim.keymap.set("n", "<leader>fg", function()
     previewer = true,
   })
 end, { desc = "Find String From Current Directory" })
+
+-- Find selected String in visual mode
+vim.keymap.set("v", "<leader>fg", function()
+  local builtin = get_telescope_builtin()
+  if builtin == nil then
+    return
+  end
+
+  -- Save current register
+  local saved_reg = vim.fn.getreg('"')
+
+  -- Yank visual selection
+  vim.cmd('normal! "vy')
+  local text = vim.fn.getreg('v')
+
+  -- Restore register
+  vim.fn.setreg('"', saved_reg)
+
+  builtin.live_grep({
+    default_text = text,
+    previewer = true,
+  })
+end, { desc = "Find visual selection" })
+
+vim.keymap.set("n", "<leader>fb", function()
+  local builtin = get_telescope_builtin()
+  if builtin == nil then
+    return
+  end
+
+  builtin.live_grep({
+    grep_open_files = true,
+    previewer = true,
+  })
+end, { desc = "Find String in Open Buffers" })
+
+vim.keymap.set("v", "<leader>fb", function()
+  local builtin = get_telescope_builtin()
+  if builtin == nil then
+    return
+  end
+
+  -- Save current register
+  local saved_reg = vim.fn.getreg('"')
+
+  -- Yank visual selection
+  vim.cmd('normal! "vy')
+  local text = vim.fn.getreg('v')
+
+  -- Restore register
+  vim.fn.setreg('"', saved_reg)
+
+  builtin.live_grep({
+    grep_open_files = true,
+    default_text = text,
+    previewer = true,
+  })
+end, { desc = "Find Visual Selection in Open Buffers" })
 
 -- To open files in buffer
 vim.keymap.set("n", "<leader>bl", "<cmd>Telescope buffers<CR>", { desc = "Open Buffer Select" })

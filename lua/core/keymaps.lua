@@ -36,6 +36,9 @@ vim.opt.colorcolumn = "80,100"
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }
 
+-- Sign Column
+vim.opt.signcolumn = "yes"
+
 -- Remove Highlighting
 vim.keymap.set('n', '<leader>nh', ':nohlsearch<CR>', { noremap = true, silent = true, desc = "No Highlight" })
 

@@ -49,6 +49,12 @@ return require('packer').startup(function(use)
     },
   }
 
+  -- git sign columns
+  use {
+      "lewis6991/gitsigns.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
+  }
+
   -- Treesitter for laguage highlighting
   use {
     "nvim-treesitter/nvim-treesitter",
