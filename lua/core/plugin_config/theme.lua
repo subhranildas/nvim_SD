@@ -2,8 +2,8 @@ local M = {}
 
 -- Available themes
 M.themes = {
-    "gruvbox",
     "kanagawa",
+    "gruvbox",
 }
 
 -- Current theme index
@@ -70,14 +70,14 @@ end
 
 vim.keymap.set(
     "n",
-    "<leader>tt",
+    "<leader>ct",
     M.next,
     { desc = "Next Theme" }
 )
 
 vim.keymap.set(
     "n",
-    "<leader>tT",
+    "<leader>cT",
     M.previous,
     { desc = "Previous Theme" }
 )
