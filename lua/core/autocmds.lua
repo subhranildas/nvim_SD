@@ -8,6 +8,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     end,
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = { "*.c", "*.h" },
+    callback = function()
+        vim.lsp.buf.format()
+    end,
+})
+
 -- LSP related auto command to enable the lsp inlay hint
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(event)

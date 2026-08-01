@@ -81,3 +81,31 @@ vim.keymap.set("n", "<leader>bsv", ":vsplit | bp<CR>", { noremap = true, silent 
 -- Close current split
 vim.keymap.set("n", "<leader>wc", ":close<CR>", { noremap = true, silent = true, desc = "Window Close" })
 
+-- Make sure in the power shell the normal yank also puts text in the system buffer
+local osc52 = require("vim.ui.clipboard.osc52")
+local cached_text = {} -- local cache for yanked content
+
+vim.g.clipboard = {
+  name = "OSC52",
+  copy = {
+    ["+"] = function(lines, regtype)
+      cached_text["+"] = { lines, regtype }
+      osc52.copy("+")(lines, regtype)
+    end,
+    ["*"] = function(lines, regtype)
+      cached_text["*"] = { lines, regtype }
+      osc52.copy("*")(lines, regtype)
+    end,
+  },
+  paste = {
+
+    ["+"] = function()
+      return cached_text["+"] or { {""}, "v" }
+    end,
+    ["*"] = function()
+      return cached_text["*"] or { {""}, "v" }
+    end,
+  },
+}
+
+vim.opt.clipboard = "unnamedplus"

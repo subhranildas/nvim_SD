@@ -19,6 +19,8 @@ require("mason-tool-installer").setup({
         ----------------------------------------------------------------
         "clangd",
         "rust-analyzer",
+        "lua-language-server",
+        "pyright",
 
         ----------------------------------------------------------------
         -- Formatters
